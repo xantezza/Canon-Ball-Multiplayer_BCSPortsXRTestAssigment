@@ -10,6 +10,16 @@ namespace Utils.Extensions
 
         private const int ZeroCountLimit = 8; //100 000 000
 
+        //turns 350 to -10 
+        public static float UnwrapAngle(this float angle)
+        {
+            angle %= 360;
+            if (angle > 180)
+                return angle - 360;
+
+            return angle;
+        }
+
         public static double SafeDivision(this double num, double denominator)
         {
             if (denominator == 0) return 1;

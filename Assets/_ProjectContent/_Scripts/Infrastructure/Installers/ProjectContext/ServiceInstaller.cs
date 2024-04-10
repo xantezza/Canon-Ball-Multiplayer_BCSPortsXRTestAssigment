@@ -1,4 +1,5 @@
-﻿using Infrastructure.Services.Analytics;
+﻿using Infrastructure.Services;
+using Infrastructure.Services.Analytics;
 using Infrastructure.Services.CoroutineRunner;
 using Infrastructure.Services.Logging;
 using Infrastructure.Services.Saving;
@@ -16,6 +17,7 @@ namespace Infrastructure.Installers.ProjectContext
             BindSceneLoaderService();
             BindAnalyticsLogService();
             BindSaveService();
+            BindPlayerColorTrackerService();
         }
         private void BindConditionalLoggingService()
         {
@@ -37,6 +39,10 @@ namespace Infrastructure.Installers.ProjectContext
             Container.BindInterfacesTo<SceneLoaderService>().FromNew().AsSingle().NonLazy();
         }
 
+        private void BindPlayerColorTrackerService()
+        {
+            Container.Bind<PlayerColorTracker>().FromNew().AsSingle().NonLazy();
+        }
 
         private void BindSaveService()
         {

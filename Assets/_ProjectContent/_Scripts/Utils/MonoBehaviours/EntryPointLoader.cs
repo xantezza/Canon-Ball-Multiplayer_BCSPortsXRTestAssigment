@@ -1,10 +1,10 @@
 ﻿using Infrastructure;
-using Infrastructure.Services.SceneLoading;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace Utils.MonoBehaviours
 {
+    [DefaultExecutionOrder(-17000)]
     public class EntryPointLoader : MonoBehaviour
     {
         private void Awake()
