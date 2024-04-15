@@ -6,6 +6,7 @@ namespace Gameplay.Player
     {
         private void OnTriggerEnter(Collider other)
         {
+            other.GetComponent<SoccerBall.SoccerBall>().AddScoreToOwner();
         }
     }
 }

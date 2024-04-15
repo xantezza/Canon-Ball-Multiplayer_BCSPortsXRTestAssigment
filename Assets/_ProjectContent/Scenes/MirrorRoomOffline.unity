@@ -326,6 +326,7 @@ GameObject:
   - component: {fileID: 2008127833}
   - component: {fileID: 2008127831}
   - component: {fileID: 2008127830}
+  - component: {fileID: 2008127834}
   m_Layer: 0
   m_Name: NetworkRoomManager
   m_TagString: Untagged
@@ -378,12 +379,12 @@ MonoBehaviour:
   runInBackground: 1
   headlessStartMode: 1
   editorAutoStart: 0
-  sendRate: 30
+  sendRate: 60
   autoStartServerBuild: 0
   autoConnectClientBuild: 0
   offlineScene: Assets/_ProjectContent/Scenes/MirrorRoomOffline.unity
   onlineScene: Assets/_ProjectContent/Scenes/MirrorRoomOnline.unity
-  transport: {fileID: 2008127830}
+  transport: {fileID: 2008127834}
   networkAddress: localhost
   maxConnections: 5
   disconnectInactiveConnections: 0
@@ -392,7 +393,8 @@ MonoBehaviour:
   playerPrefab: {fileID: 6596563952480511769, guid: 2f073fe03a5153b4a8cc97d03ad98ebd, type: 3}
   autoCreatePlayer: 1
   playerSpawnMethod: 1
-  spawnPrefabs: []
+  spawnPrefabs:
+  - {fileID: 3429911415116987808, guid: d9d9c10708c082a40b6dab6092dffbf1, type: 3}
   exceptionsDisconnect: 1
   snapshotSettings:
     bufferTimeMultiplier: 2
@@ -417,7 +419,6 @@ MonoBehaviour:
   roomSlots: []
   clientIndex: 0
   rewardPrefab: {fileID: 0}
-  playerColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!4 &2008127832
 Transform:
   m_ObjectHideFlags: 0
@@ -447,6 +448,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   offsetX: 0
   offsetY: 0
+--- !u!114 &2008127834
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2008127829}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 96b149f511061407fb54895c057b7736, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  wrap: {fileID: 2008127830}
+  latency: 150
+  jitter: 0
+  jitterSpeed: 1
+  unreliableLoss: 5
+  unreliableScramble: 100
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

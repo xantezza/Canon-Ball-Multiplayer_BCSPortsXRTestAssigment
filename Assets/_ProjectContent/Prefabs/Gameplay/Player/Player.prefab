@@ -388,13 +388,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1459442398371774121}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.5, y: 0.5, z: -0.5, w: 0.5}
-  m_LocalPosition: {x: 0.683, y: 1.135, z: -0}
+  m_LocalRotation: {x: 0.52872723, y: 0.46951842, z: -0.52872723, w: 0.46951842}
+  m_LocalPosition: {x: 1.82, y: 1.06, z: -0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4235408344086312930}
-  m_LocalEulerAnglesHint: {x: 90, y: -90, z: -180}
+  m_LocalEulerAnglesHint: {x: 83.211, y: -90, z: -180}
 --- !u!20 &2705373453072677500
 Camera:
   m_ObjectHideFlags: 0
@@ -479,7 +479,7 @@ Transform:
   m_GameObject: {fileID: 1773632555611203470}
   serializedVersion: 2
   m_LocalRotation: {x: 0.5, y: 0.5, z: -0.5, w: 0.5}
-  m_LocalPosition: {x: 0, y: -0.782, z: 0}
+  m_LocalPosition: {x: 0, y: -1.107, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -987,16 +987,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af597743aa931514c8d11ac6cf870a88, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  syncDirection: 1
+  syncDirection: 0
   syncMode: 0
   syncInterval: 0
   _canonAimLeftRightRoot: {fileID: 947854246425360538}
   _canonAimUpDownRoot: {fileID: 2248801691725956909}
+  _ballSpawnPoint: {fileID: 6841043897182536460}
   _camera: {fileID: 2705373453072677500}
+  _shotImpulseMultiplier: 10
+  _shotCooldownInSeconds: 2
   _aimXSpeedMultiplier: 7
   _aimYSpeedMultiplier: 7
   _clampLeftRightAngle: 90
-  _clampUpDownAngle: 10
+  _clampUpDownAngle: 45
+  _soccerBallPrefab: {fileID: 3690878557849453085, guid: d9d9c10708c082a40b6dab6092dffbf1, type: 3}
   _materialToCopy: {fileID: 2100000, guid: c9a7d7fd409652c4d878129f1bc6475a, type: 2}
   _meshes:
   - {fileID: 8176502444107777062}
@@ -1006,9 +1010,6 @@ MonoBehaviour:
   - {fileID: 7491002772191276212}
   - {fileID: 5215471383137562847}
   - {fileID: 2790985111399034277}
-  color:
-    serializedVersion: 2
-    rgba: 4278190080
 --- !u!114 &3360017754931874944
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -17,7 +17,6 @@ namespace Infrastructure.Installers.ProjectContext
             BindSceneLoaderService();
             BindAnalyticsLogService();
             BindSaveService();
-            BindPlayerColorTrackerService();
         }
         private void BindConditionalLoggingService()
         {
@@ -38,12 +37,7 @@ namespace Infrastructure.Installers.ProjectContext
         {
             Container.BindInterfacesTo<SceneLoaderService>().FromNew().AsSingle().NonLazy();
         }
-
-        private void BindPlayerColorTrackerService()
-        {
-            Container.Bind<PlayerColorTracker>().FromNew().AsSingle().NonLazy();
-        }
-
+        
         private void BindSaveService()
         {
 #if DEV

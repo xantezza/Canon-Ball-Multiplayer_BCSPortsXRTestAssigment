@@ -318,7 +318,7 @@ namespace Mirror
             {
                 for (int i = 0; i < roomSlots.Count; i++)
                 {
-                    roomSlots[i].index = i;
+                    roomSlots[i]._index = i;
                 }
             }
         }

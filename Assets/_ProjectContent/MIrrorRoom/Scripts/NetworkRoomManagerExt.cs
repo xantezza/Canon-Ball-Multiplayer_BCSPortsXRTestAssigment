@@ -1,4 +1,6 @@
+using Infrastructure.Services;
 using UnityEngine;
+using Zenject;
 
 /*
 	Documentation: https://mirror-networking.gitbook.io/docs/components/network-manager
@@ -13,6 +15,7 @@ namespace Mirror.Examples.NetworkRoom
         [Header("Spawner Setup")]
         [Tooltip("Reward Prefab for the Spawner")]
         public GameObject rewardPrefab;
+
         public static new NetworkRoomManagerExt singleton => NetworkManager.singleton as NetworkRoomManagerExt;
 
         /// <summary>
@@ -22,8 +25,8 @@ namespace Mirror.Examples.NetworkRoom
         public override void OnRoomServerSceneChanged(string sceneName)
         {
             // spawn the initial batch of Rewards
-           // if (sceneName == GameplayScene)
-                //Spawner.InitialSpawn();
+            // if (sceneName == GameplayScene)
+            //Spawner.InitialSpawn();
         }
 
         /// <summary>

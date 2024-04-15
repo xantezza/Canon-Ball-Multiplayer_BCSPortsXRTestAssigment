@@ -33,7 +33,7 @@ namespace Mirror
         /// </summary>
         [ReadOnly, Tooltip("Diagnostic index of the player, e.g. Player1, Player2, etc.")]
         [SyncVar(hook = nameof(IndexChanged))]
-        public int index;
+        public int _index;
 
         #region Unity Callbacks
 
@@ -156,45 +156,34 @@ namespace Mirror
 
         void DrawPlayerReadyState()
         {
-            GUILayout.BeginArea(new Rect(20f + (index * 100), 200f, 90f, 130f));
+            GUILayout.BeginArea(new Rect(20f + (_index * 100), 200f, 90f, 130f));
 
-            GUILayout.Label($"Player [{index + 1}]");
+            GUILayout.Label($"Player [{_index + 1}]");
 
             if (readyToBegin)
                 GUILayout.Label("Ready");
             else
                 GUILayout.Label("Not Ready");
 
-            if (((isServer && index > 0) || isServerOnly) && GUILayout.Button("REMOVE"))
+            /*if (((isServer && _index > 0) || isServerOnly) && GUILayout.Button("REMOVE"))
             {
                 // This button only shows on the Host for all players other than the Host
                 // Host and Players can't remove themselves (stop the client instead)
                 // Host can kick a Player this way.
                 GetComponent<NetworkIdentity>().connectionToClient.Disconnect();
-            }
+            }*/
+
+            DrawColor();
 
             GUILayout.EndArea();
         }
 
-        void DrawPlayerReadyButton()
+        protected virtual void DrawColor()
         {
-            if (NetworkClient.active && isLocalPlayer)
-            {
-                GUILayout.BeginArea(new Rect(20f, 300f, 120f, 20f));
+        }
 
-                if (readyToBegin)
-                {
-                    if (GUILayout.Button("Cancel"))
-                        CmdChangeReadyState(false);
-                }
-                else
-                {
-                    if (GUILayout.Button("Ready"))
-                        CmdChangeReadyState(true);
-                }
-
-                GUILayout.EndArea();
-            }
+        protected virtual void DrawPlayerReadyButton()
+        {
         }
 
         #endregion
