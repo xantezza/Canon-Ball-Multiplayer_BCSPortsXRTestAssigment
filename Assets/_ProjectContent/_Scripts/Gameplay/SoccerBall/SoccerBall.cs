@@ -10,16 +10,21 @@ namespace Gameplay.SoccerBall
     {
         private const float MAX_LIFETIME = 10;
 
-        [SerializeField] Rigidbody _rigidBody;
+        [SerializeField] private Rigidbody _rigidBody;
 
         private Canon _cachedOwnersCanon;
-        private SoccerBallFactory _soccerBallFactory;
+        private SoccerBallFactoryMirror _soccerBallFactory;
         private float _lifetime;
 
         [Inject]
-        private void Inject(SoccerBallFactory soccerBallFactory)
+        private void Inject(SoccerBallFactoryMirror soccerBallFactory)
         {
             _soccerBallFactory = soccerBallFactory;
+        }
+
+        public void Awake()
+        {
+            _rigidBody.Sleep();
         }
 
         public void Init(Canon canon, float impulseForce)
@@ -27,6 +32,7 @@ namespace Gameplay.SoccerBall
             _rigidBody.velocity = Vector3.zero;
             _rigidBody.angularVelocity = Vector3.zero;
             _lifetime = 0;
+
             _cachedOwnersCanon = canon;
             ApplyForce(transform.forward * impulseForce);
         }

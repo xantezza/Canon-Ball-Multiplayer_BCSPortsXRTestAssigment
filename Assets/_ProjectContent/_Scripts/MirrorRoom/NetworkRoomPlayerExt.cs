@@ -2,16 +2,16 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Infrastructure.Services;
+using Mirror;
 using UnityEngine;
 
-namespace Mirror.Examples.NetworkRoom
+namespace MirrorRoom
 {
-    [AddComponentMenu("")]
     public class NetworkRoomPlayerExt : NetworkRoomPlayer
     {
-        //at this moment there can be only one room so static can be used
         private static List<ColorEnum> SelectedColors = new();
         public static PlayerData OwnedPlayerData;
+
         [SyncVar]
         private PlayerData _playerData;
 
@@ -44,14 +44,14 @@ namespace Mirror.Examples.NetworkRoom
                     if (color != ColorEnum.None && GUILayout.Button(color.ToString()))
                         SelectColor(color);
                 }
-            }   
+            }
 
             GUILayout.EndArea();
         }
 
         protected override void DrawColor()
         {
-           if (_playerData != null) GUILayout.Label(_playerData.PlayerColorEnum.ToString());
+            if (_playerData != null) GUILayout.Label(_playerData.PlayerColorEnum.ToString());
         }
 
         protected override void DrawPlayerReadyButton()
@@ -109,18 +109,18 @@ namespace Mirror.Examples.NetworkRoom
         private void CmdInit()
         {
             _playerData ??= new PlayerData();
-            
+
             _playerData.Name = $"Player{_index + 1}";
             _playerData.Index = _index;
 
             RPCInit(SelectedColors, _playerData);
-        }      
+        }
 
         [ClientRpc]
         private void RPCInit(List<ColorEnum> selectedColors, PlayerData playerData)
         {
             SelectedColors = selectedColors;
-            _playerData = playerData;   
+            _playerData = playerData;
 
             if (isOwned) OwnedPlayerData = _playerData;
         }
