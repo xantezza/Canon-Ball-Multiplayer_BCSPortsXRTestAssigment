@@ -188,7 +188,7 @@ MonoBehaviour:
   motionSmoothingVelocityThreshold: 0.1
   motionSmoothingAngularVelocityThreshold: 0.1
   motionSmoothingTimeTolerance: 0.5
-  stateHistoryLimit: 6
+  stateHistoryLimit: 3
   recordInterval: 0.05
   onlyRecordChanges: 1
   compareLastFirst: 1
@@ -197,7 +197,7 @@ MonoBehaviour:
   oneFrameAhead: 1
   correctionMode: 1
   snapThreshold: 2
-  showGhost: 1
+  showGhost: 0
   ghostVelocityThreshold: 0.1
   localGhostMaterial: {fileID: 0}
   remoteGhostMaterial: {fileID: 0}

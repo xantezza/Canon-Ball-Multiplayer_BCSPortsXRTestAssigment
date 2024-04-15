@@ -714,6 +714,7 @@ GameObject:
   - component: {fileID: 7926330582722392130}
   - component: {fileID: 8176502444107777062}
   - component: {fileID: 8365675912429018762}
+  - component: {fileID: 1362700154864733229}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -807,6 +808,18 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1362700154864733229
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3313109579405593610}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f2ed9c9ea0d8471c98f7b80d3a680c8b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5385603602678334054
 GameObject:
   m_ObjectHideFlags: 0
@@ -886,7 +899,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5675429320190025475}
-  - component: {fileID: 8766059149858361851}
   m_Layer: 0
   m_Name: Gates
   m_TagString: Untagged
@@ -910,18 +922,6 @@ Transform:
   - {fileID: 2420245972505358567}
   m_Father: {fileID: 280324871583861810}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8766059149858361851
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6542560279057900716}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f2ed9c9ea0d8471c98f7b80d3a680c8b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &6596563952480511769
 GameObject:
   m_ObjectHideFlags: 0
@@ -1010,6 +1010,15 @@ MonoBehaviour:
   - {fileID: 7491002772191276212}
   - {fileID: 5215471383137562847}
   - {fileID: 2790985111399034277}
+  _playerData:
+    PlayerColor: {r: 1, g: 1, b: 1, a: 1}
+    PlayerColorEnum: 0
+    Name: 
+    Index: 0
+  _score: 0
+  _color:
+    serializedVersion: 2
+    rgba: 4278190080
 --- !u!114 &3360017754931874944
 MonoBehaviour:
   m_ObjectHideFlags: 0

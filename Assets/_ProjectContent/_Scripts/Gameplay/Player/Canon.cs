@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using Infrastructure.Factories;
 using Infrastructure.Services;
 using Mirror;
 using Mirror.Examples.NetworkRoom;
@@ -18,7 +19,7 @@ namespace Gameplay.Player
 
         [SerializeField] private float _shotImpulseMultiplier;
         [SerializeField] private float _shotCooldownInSeconds;
-        
+
         [SerializeField] private float _aimXSpeedMultiplier;
         [SerializeField] private float _aimYSpeedMultiplier;
 
@@ -29,40 +30,37 @@ namespace Gameplay.Player
         [SerializeField] private Material _materialToCopy;
         [SerializeField] private List<MeshRenderer> _meshes;
 
-        private Vector3 _prevMousePosition;
+        [SyncVar] [SerializeField] private PlayerData _playerData = new();
+        [SyncVar] [SerializeField] private int _score;
 
+        private Vector3 _prevMousePosition;
         private float _cooldownLeft;
 
-        [SyncVar]
-        [SerializeField] private PlayerData _playerData = new();
-
-        [SyncVar]
-        [SerializeField] private int _score;
+        [Inject]
+        private void Inject(SoccerBallFactory ballFactory)
+        {
+            _ballFactory = ballFactory;
+        }
 
         public void Start()
         {
             _camera.gameObject.SetActive(isOwned);
-            
+
             if (!isOwned) return;
-            CmdUpdateColor(NetworkRoomPlayerExt.OwnedPlayerData);
+            CmdUpdatePlayerData(NetworkRoomPlayerExt.OwnedPlayerData);
             Cursor.lockState = CursorLockMode.Locked;
         }
 
         [SyncVar(hook = nameof(SetColorHook))]
         public Color32 _color = Color.black;
 
+        private SoccerBallFactory _ballFactory;
+
         void SetColorHook(Color32 _, Color32 newColor)
         {
             SetColor(newColor);
         }
 
-        [Command]
-        private void CmdUpdateColor(PlayerData playerData)
-        {
-            _playerData = playerData;
-            _color = playerData.PlayerColor;
-        }
-        
         private void SetColor(Color color)
         {
             var newMaterial = new Material(_materialToCopy)
@@ -73,22 +71,12 @@ namespace Gameplay.Player
             _meshes.ForEach(x => x.material = newMaterial);
         }
 
-        [ContextMenu("Gather Meshes")]
-        private void GatherMeshes()
-        {
-            _meshes = GetComponentsInChildren<MeshRenderer>().ToList();
-        }
-
         private void Update()
         {
-            if (isServer || isServerOnly)
-            {
-                UpdateCooldown();
-            }
+            UpdateCooldown();
 
             if (isOwned)
             {
-                UpdateCooldown();
                 UpdateInput();
             }
         }
@@ -125,30 +113,18 @@ namespace Gameplay.Player
         private void TryShoot()
         {
             if (_cooldownLeft > 0f) return;
-            CmdShoot();
             Shoot();
-            _cooldownLeft = _shotCooldownInSeconds;
-        }
-
-        [Command]
-        private void CmdShoot()
-        {
-            if (_cooldownLeft > 0f) return;
-            _cooldownLeft = _shotCooldownInSeconds;
-            RpcFireWeapon();
+            if (!isServer) CmdShoot();
         }
 
         private void Shoot()
         {
-            var bullet = Instantiate(_soccerBallPrefab, _ballSpawnPoint.position, _ballSpawnPoint.rotation);
-            bullet.Init(this, _shotImpulseMultiplier);
-        }
+            _cooldownLeft = _shotCooldownInSeconds;
 
-        [ClientRpc(includeOwner = false)]
-        private void RpcFireWeapon()
-        {
             var bullet = Instantiate(_soccerBallPrefab, _ballSpawnPoint.position, _ballSpawnPoint.rotation);
             bullet.Init(this, _shotImpulseMultiplier);
+
+            if (isServer) RpcFireWeapon();
         }
 
         private void UpdateCooldown()
@@ -162,9 +138,27 @@ namespace Gameplay.Player
             if (isOwned && hasFocus) Cursor.lockState = CursorLockMode.Locked;
         }
 
+        private void OnGUI()
+        {
+            GUILayout.BeginArea(new Rect((_playerData.Index * 130), 150, 120, 130f));
+
+            GUILayout.Label($"{_playerData.Name} ({_playerData.PlayerColorEnum}): {_score}");
+
+            GUILayout.EndArea();
+        }
+
+        [Server]
         public void AddScore()
         {
             CmdAddScore();
+        }
+
+        [Command]
+        private void CmdShoot()
+        {
+            if (_cooldownLeft > 0f) return;
+            _cooldownLeft = _shotCooldownInSeconds;
+            RpcFireWeapon();
         }
 
         [Command]
@@ -173,13 +167,38 @@ namespace Gameplay.Player
             _score++;
         }
 
-        private void OnGUI()
+        [Command]
+        private void CmdUpdatePlayerData(PlayerData playerData)
         {
-            GUILayout.BeginArea(new Rect((_playerData.Index * 110), 200, 100, 130f));
+            _playerData = playerData;
+            _color = playerData.PlayerColor;
+        }
 
-            GUILayout.Label($"{_playerData.Name} ({_playerData.PlayerColorEnum}): {_score}");
+        [ClientRpc(includeOwner = false)]
+        private void RpcFireWeapon()
+        {
+            var bullet = Instantiate(_soccerBallPrefab, _ballSpawnPoint.position, _ballSpawnPoint.rotation);
+            bullet.Init(this, _shotImpulseMultiplier);
+        }
 
-            GUILayout.EndArea();
+        /*
+            var bullet = Instantiate(_soccerBallPrefab, _ballSpawnPoint.position, _ballSpawnPoint.rotation);
+            bullet.Init(this, _shotImpulseMultiplier);
+            
+            _ballFactory.Create(new SoccerBallFactory.SoccerBallData
+            {
+                Canon = this,
+                Position = _ballSpawnPoint.position,
+                Rotation = _ballSpawnPoint.rotation,
+                ShootForce = _shotImpulseMultiplier
+            });
+         */
+
+
+        [ContextMenu("Gather Meshes")]
+        private void GatherMeshes()
+        {
+            _meshes = GetComponentsInChildren<MeshRenderer>().ToList();
         }
     }
 }

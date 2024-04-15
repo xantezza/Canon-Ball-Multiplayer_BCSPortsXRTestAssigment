@@ -247,6 +247,7 @@ Transform:
   - {fileID: 4895855354268550096}
   - {fileID: 7538335589412189997}
   - {fileID: 209004101722861648}
+  - {fileID: 2634677651252957582}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6618613213814882690
@@ -264,8 +265,9 @@ MonoBehaviour:
   _scriptableObjectInstallers: []
   _monoInstallers:
   - {fileID: 8043919314299501510}
-  - {fileID: 1104072240970714977}
   - {fileID: 1497098016339431446}
+  - {fileID: 1104072240970714977}
+  - {fileID: 3449288794028512391}
   _installerPrefabs: []
   _parentNewObjectsUnderContext: 1
   _editorReflectionBakingCoverageMode: 0
@@ -462,9 +464,57 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d890d1e5e5134e00a06b8edc6adb4794, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _lastFetchDate: 10.04.2024 0:26:31
-  _currentDate: 10.04.2024 0:31:00
-  _minutesFromLastFetch: -4
+  _lastFetchDate: 15.04.2024 12:53:52
+  _currentDate: 15.04.2024 12:53:54
+  _minutesFromLastFetch: 0
   _cachedConfigString: "{\r\n  \"infrastructure_config\": {\r\n    \"IsDebugEnabled\":
     false,\r\n    \"FakeTimeBeforeLoad\": 0.0,\r\n    \"FakeMinimalLoadTime\": 0.5,\r\n   
     \"FakeTimeAfterLoad\": 0.5\r\n  }\r\n}"
+--- !u!1 &8872804919969431397
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2634677651252957582}
+  - component: {fileID: 3449288794028512391}
+  m_Layer: 0
+  m_Name: MonoMemoryPoolInstaller
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2634677651252957582
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8872804919969431397}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6994547916840969886}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3449288794028512391
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8872804919969431397}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 148c80c5d6a746f1ba5a2c77570879a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _soccerBallPoolContainer:
+    Prefab: {fileID: 3690878557849453085, guid: d9d9c10708c082a40b6dab6092dffbf1, type: 3}
+    InitialSize: 10
+    PoolGroupName: '[POOL] Soccer Balls'

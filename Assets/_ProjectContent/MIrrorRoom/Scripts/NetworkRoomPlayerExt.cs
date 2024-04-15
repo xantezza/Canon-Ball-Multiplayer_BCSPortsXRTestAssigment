@@ -37,14 +37,14 @@ namespace Mirror.Examples.NetworkRoom
 
             GUILayout.BeginArea(new Rect(20f + (_index * 100), 400, 180f, colors.Count() * 130f));
 
-            if (_playerData.PlayerColorEnum == ColorEnum.None)
+            if (_playerData != null && _playerData.PlayerColorEnum == ColorEnum.None)
             {
                 foreach (var color in colors)
                 {
                     if (color != ColorEnum.None && GUILayout.Button(color.ToString()))
                         SelectColor(color);
                 }
-            }
+            }   
 
             GUILayout.EndArea();
         }
@@ -66,7 +66,7 @@ namespace Mirror.Examples.NetworkRoom
                         CmdChangeReadyState(false);
                 }
 
-                if (_playerData.PlayerColorEnum != ColorEnum.None)
+                if (_playerData != null && _playerData.PlayerColorEnum != ColorEnum.None)
                 {
                     if (GUILayout.Button("Ready"))
                         CmdChangeReadyState(true);
@@ -116,7 +116,7 @@ namespace Mirror.Examples.NetworkRoom
             RPCInit(SelectedColors, _playerData);
         }      
 
-        [TargetRpc]
+        [ClientRpc]
         private void RPCInit(List<ColorEnum> selectedColors, PlayerData playerData)
         {
             SelectedColors = selectedColors;
