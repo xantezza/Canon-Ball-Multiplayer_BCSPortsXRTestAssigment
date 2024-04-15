@@ -1,5 +1,4 @@
-﻿using Infrastructure.Factories;
-using Infrastructure.Services.Modals;
+﻿using Infrastructure.Services.Modals;
 using Infrastructure.StateMachines;
 using Infrastructure.StateMachines.GameLoopStateMachine;
 using Infrastructure.StateMachines.InitializationStateMachine;
@@ -8,7 +7,7 @@ using Zenject;
 
 namespace Infrastructure.Installers.ProjectContext
 {
-    public class FactoryInstaller : MonoInstaller
+    public class ProjectContextFactoryInstaller : MonoInstaller
     {
         [SerializeField] private ModalsFactory _modalsFactory;
 

@@ -3,7 +3,7 @@ using System.Linq;
 using Infrastructure.Factories;
 using Infrastructure.Services;
 using Mirror;
-using Mirror.Examples.NetworkRoom;
+using MirrorRoom;
 using UnityEngine;
 using Utils.Extensions;
 using Zenject;
@@ -31,13 +31,20 @@ namespace Gameplay.Player
         [SerializeField] private List<MeshRenderer> _meshes;
 
         [SyncVar] [SerializeField] private PlayerData _playerData = new();
+
         [SyncVar] [SerializeField] private int _score;
 
+        [SyncVar(hook = nameof(SetColorHook))]
+        public Color32 _color = Color.black;
+
         private Vector3 _prevMousePosition;
+
         private float _cooldownLeft;
 
+        private SoccerBallFactoryMirror _ballFactory;
+
         [Inject]
-        private void Inject(SoccerBallFactory ballFactory)
+        private void Inject(SoccerBallFactoryMirror ballFactory)
         {
             _ballFactory = ballFactory;
         }
@@ -50,11 +57,6 @@ namespace Gameplay.Player
             CmdUpdatePlayerData(NetworkRoomPlayerExt.OwnedPlayerData);
             Cursor.lockState = CursorLockMode.Locked;
         }
-
-        [SyncVar(hook = nameof(SetColorHook))]
-        public Color32 _color = Color.black;
-
-        private SoccerBallFactory _ballFactory;
 
         void SetColorHook(Color32 _, Color32 newColor)
         {
@@ -121,8 +123,8 @@ namespace Gameplay.Player
         {
             _cooldownLeft = _shotCooldownInSeconds;
 
-            var bullet = Instantiate(_soccerBallPrefab, _ballSpawnPoint.position, _ballSpawnPoint.rotation);
-            bullet.Init(this, _shotImpulseMultiplier);
+            _ballFactory.Create(_ballSpawnPoint.position, _ballSpawnPoint.rotation).Init(this, _shotImpulseMultiplier);
+            
 
             if (isServer) RpcFireWeapon();
         }
@@ -150,7 +152,7 @@ namespace Gameplay.Player
         [Server]
         public void AddScore()
         {
-            CmdAddScore();
+            _score++;
         }
 
         [Command]
@@ -159,12 +161,6 @@ namespace Gameplay.Player
             if (_cooldownLeft > 0f) return;
             _cooldownLeft = _shotCooldownInSeconds;
             RpcFireWeapon();
-        }
-
-        [Command]
-        private void CmdAddScore()
-        {
-            _score++;
         }
 
         [Command]
@@ -177,23 +173,8 @@ namespace Gameplay.Player
         [ClientRpc(includeOwner = false)]
         private void RpcFireWeapon()
         {
-            var bullet = Instantiate(_soccerBallPrefab, _ballSpawnPoint.position, _ballSpawnPoint.rotation);
-            bullet.Init(this, _shotImpulseMultiplier);
+            _ballFactory.Create(_ballSpawnPoint.position, _ballSpawnPoint.rotation).Init(this, _shotImpulseMultiplier);
         }
-
-        /*
-            var bullet = Instantiate(_soccerBallPrefab, _ballSpawnPoint.position, _ballSpawnPoint.rotation);
-            bullet.Init(this, _shotImpulseMultiplier);
-            
-            _ballFactory.Create(new SoccerBallFactory.SoccerBallData
-            {
-                Canon = this,
-                Position = _ballSpawnPoint.position,
-                Rotation = _ballSpawnPoint.rotation,
-                ShootForce = _shotImpulseMultiplier
-            });
-         */
-
 
         [ContextMenu("Gather Meshes")]
         private void GatherMeshes()

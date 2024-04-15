@@ -97,7 +97,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 112000000, guid: 337cf5df4a14edc4688e52b3091f03bc, type: 2}
+  m_LightingDataAsset: {fileID: 112000000, guid: 1da355307b35a6b4d96a5dc68fc3c4ab, type: 2}
   m_LightingSettings: {fileID: 889175603}
 --- !u!196 &4
 NavMeshSettings:
@@ -393,8 +393,7 @@ MonoBehaviour:
   playerPrefab: {fileID: 6596563952480511769, guid: 2f073fe03a5153b4a8cc97d03ad98ebd, type: 3}
   autoCreatePlayer: 1
   playerSpawnMethod: 1
-  spawnPrefabs:
-  - {fileID: 3429911415116987808, guid: d9d9c10708c082a40b6dab6092dffbf1, type: 3}
+  spawnPrefabs: []
   exceptionsDisconnect: 1
   snapshotSettings:
     bufferTimeMultiplier: 2
@@ -465,7 +464,7 @@ MonoBehaviour:
   jitter: 0
   jitterSpeed: 1
   unreliableLoss: 5
-  unreliableScramble: 100
+  unreliableScramble: 70
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

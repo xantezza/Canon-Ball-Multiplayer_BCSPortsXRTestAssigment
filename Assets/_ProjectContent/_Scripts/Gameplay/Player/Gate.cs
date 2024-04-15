@@ -7,10 +7,10 @@ namespace Gameplay.Player
 {
     public class Gate : NetworkBehaviour
     {
-        private SoccerBallFactory _soccerBallFactory;
+        private SoccerBallFactoryMirror _soccerBallFactory;
 
         [Inject]
-        private void Inject(SoccerBallFactory soccerBallFactory)
+        private void Inject(SoccerBallFactoryMirror soccerBallFactory)
         {
             _soccerBallFactory = soccerBallFactory;
         }

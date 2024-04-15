@@ -1,6 +1,4 @@
 ﻿using System;
-using Gameplay.SoccerBall;
-using Infrastructure.Factories;
 using UnityEngine;
 using Zenject;
 
@@ -16,12 +14,8 @@ namespace Infrastructure.Installers.ProjectContext
             public string PoolGroupName;
         }
 
-        [SerializeField] private PoolContainer<SoccerBall> _soccerBallPoolContainer;
-
         public override void InstallBindings()
         {
-            BindWithDataContainer<SoccerBall, SoccerBallFactory.Pool>(_soccerBallPoolContainer);
-            Container.Bind<SoccerBallFactory>().FromNew().AsSingle().NonLazy();
         }
 
         private void BindWithDataContainer<T1, T2>(PoolContainer<T1> container)
