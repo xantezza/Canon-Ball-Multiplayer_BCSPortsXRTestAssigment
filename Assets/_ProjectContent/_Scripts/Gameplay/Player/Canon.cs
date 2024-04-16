@@ -17,6 +17,9 @@ namespace Gameplay.Player
         [SerializeField] private Transform _ballSpawnPoint;
         [SerializeField] private Camera _camera;
 
+        [SerializeField] private float _minImpulse = 0.4f;
+        [SerializeField] private float _maxImpulse = 1f;
+        [SerializeField] private float _timeToHoldForMaxImpulse = 1f;
         [SerializeField] private float _shotImpulseMultiplier;
         [SerializeField] private float _shotCooldownInSeconds;
 
@@ -26,20 +29,18 @@ namespace Gameplay.Player
         [SerializeField] private float _clampLeftRightAngle;
         [SerializeField] private float _clampUpDownAngle;
 
-        [SerializeField] private SoccerBall.SoccerBall _soccerBallPrefab;
         [SerializeField] private Material _materialToCopy;
         [SerializeField] private List<MeshRenderer> _meshes;
 
         [SyncVar] [SerializeField] private PlayerData _playerData = new();
-
         [SyncVar] [SerializeField] private int _score;
 
         [SyncVar(hook = nameof(SetColorHook))]
         public Color32 _color = Color.black;
 
         private Vector3 _prevMousePosition;
-
         private float _cooldownLeft;
+        private float _buttonDownTime;
 
         private SoccerBallFactoryMirror _ballFactory;
 
@@ -103,7 +104,12 @@ namespace Gameplay.Player
 
             if (Input.GetMouseButtonDown(0))
             {
-                TryShoot();
+                _buttonDownTime = Time.realtimeSinceStartup;
+            }
+
+            if (Input.GetMouseButtonUp(0))
+            {
+                Shoot();
             }
 
             if (Input.GetKeyDown(KeyCode.LeftAlt))
@@ -112,21 +118,27 @@ namespace Gameplay.Player
             }
         }
 
-        private void TryShoot()
+        private void Shoot()
         {
             if (_cooldownLeft > 0f) return;
-            Shoot();
-            if (!isServer) CmdShoot();
+            var impulseForce = GetImpulseForce();
+            LocalShoot(impulseForce);
+            if (!isServer) CmdShoot(impulseForce);
         }
 
-        private void Shoot()
+        private void LocalShoot(float impulseForce)
         {
             _cooldownLeft = _shotCooldownInSeconds;
 
-            _ballFactory.Create(_ballSpawnPoint.position, _ballSpawnPoint.rotation).Init(this, _shotImpulseMultiplier);
-            
+            _ballFactory.Create(_ballSpawnPoint.position, _ballSpawnPoint.rotation).Init(this, impulseForce);
 
-            if (isServer) RpcFireWeapon();
+            if (isServer) RpcFireWeapon(impulseForce);
+        }
+
+        private float GetImpulseForce()
+        {
+            var holdTime = Time.realtimeSinceStartup - _buttonDownTime;
+            return _shotImpulseMultiplier * Mathf.Clamp(holdTime / _timeToHoldForMaxImpulse, _minImpulse, _maxImpulse);
         }
 
         private void UpdateCooldown()
@@ -150,17 +162,18 @@ namespace Gameplay.Player
         }
 
         [Server]
-        public void AddScore()
+        public void AddToScore(int value)
         {
-            _score++;
+            _score += value;
+            _score = Mathf.Clamp(_score, 0, int.MaxValue);
         }
 
         [Command]
-        private void CmdShoot()
+        private void CmdShoot(float impulseForce)
         {
             if (_cooldownLeft > 0f) return;
             _cooldownLeft = _shotCooldownInSeconds;
-            RpcFireWeapon();
+            RpcFireWeapon(impulseForce);
         }
 
         [Command]
@@ -171,9 +184,9 @@ namespace Gameplay.Player
         }
 
         [ClientRpc(includeOwner = false)]
-        private void RpcFireWeapon()
+        private void RpcFireWeapon(float impulseForce)
         {
-            _ballFactory.Create(_ballSpawnPoint.position, _ballSpawnPoint.rotation).Init(this, _shotImpulseMultiplier);
+            _ballFactory.Create(_ballSpawnPoint.position, _ballSpawnPoint.rotation).Init(this, impulseForce);
         }
 
         [ContextMenu("Gather Meshes")]

@@ -54,7 +54,7 @@ namespace Gameplay.SoccerBall
         [Server]
         public void AddScoreToOwner()
         {
-            _cachedOwnersCanon.AddScore();
+            _cachedOwnersCanon.AddToScore(1);
         }
     }
 }

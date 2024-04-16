@@ -95,7 +95,6 @@ namespace MirrorRoom
             _playerData.PlayerColor = colorEnum switch
             {
                 ColorEnum.White => Color.white,
-                ColorEnum.Red => Color.red,
                 ColorEnum.Blue => Color.blue,
                 ColorEnum.Yellow => Color.yellow,
                 ColorEnum.Magenta => Color.magenta,
@@ -129,7 +128,6 @@ namespace MirrorRoom
         {
             None,
             White,
-            Red,
             Blue,
             Yellow,
             Magenta,
