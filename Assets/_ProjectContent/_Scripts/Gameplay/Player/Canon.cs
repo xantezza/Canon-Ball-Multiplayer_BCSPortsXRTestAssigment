@@ -154,7 +154,7 @@ namespace Gameplay.Player
 
         private void OnGUI()
         {
-            GUILayout.BeginArea(new Rect((_playerData.Index * 130), 150, 120, 130f));
+            GUILayout.BeginArea(new Rect((_playerData.Index * 150), 150, 140, 130f));
 
             GUILayout.Label($"{_playerData.Name} ({_playerData.PlayerColorEnum}): {_score}");
 

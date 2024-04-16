@@ -388,13 +388,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1459442398371774121}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.52872723, y: 0.46951842, z: -0.52872723, w: 0.46951842}
-  m_LocalPosition: {x: 1.38, y: 1.701, z: -0}
+  m_LocalRotation: {x: 0.5, y: 0.5, z: -0.5, w: 0.5}
+  m_LocalPosition: {x: 0.713, y: 1.011, z: -0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4235408344086312930}
-  m_LocalEulerAnglesHint: {x: 83.211, y: -90, z: -180}
+  m_LocalEulerAnglesHint: {x: 90, y: -90, z: -180}
 --- !u!20 &2705373453072677500
 Camera:
   m_ObjectHideFlags: 0
@@ -1003,7 +1003,7 @@ MonoBehaviour:
   _minImpulse: 0.4
   _maxImpulse: 1
   _timeToHoldForMaxImpulse: 1
-  _shotImpulseMultiplier: 10
+  _shotImpulseMultiplier: 20
   _shotCooldownInSeconds: 2
   _aimXSpeedMultiplier: 7
   _aimYSpeedMultiplier: 7
