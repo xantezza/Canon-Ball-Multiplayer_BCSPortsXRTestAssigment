@@ -19,7 +19,7 @@ namespace Infrastructure.StateMachines.GameLoopStateMachine.States
         private readonly ICoroutineRunnerService _coroutineRunnerService;
         private readonly GameLoopStateMachine _stateMachine;
         private readonly ISceneLoaderService _sceneLoaderService;
-        private readonly ConditionalLoggingService _conditionalLoggingService;
+        private readonly IConditionalLoggingService _conditionalLoggingService;
         private InfrastructureConfig _infrastructureConfig;
 
         private SceneNames _cachedSceneToLoadAfterLoadingSceneLoad;
@@ -30,7 +30,7 @@ namespace Infrastructure.StateMachines.GameLoopStateMachine.States
             GameLoopStateMachine stateMachine,
             ISceneLoaderService sceneLoaderService,
             ICoroutineRunnerService coroutineRunnerService,
-            ConditionalLoggingService conditionalLoggingService)
+            IConditionalLoggingService conditionalLoggingService)
         {
             _conditionalLoggingService = conditionalLoggingService;
             _stateMachine = stateMachine;

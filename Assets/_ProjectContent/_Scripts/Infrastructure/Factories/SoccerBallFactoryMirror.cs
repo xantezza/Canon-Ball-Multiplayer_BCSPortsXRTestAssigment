@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Infrastructure.Factories
 {
-    public class SoccerBallFactoryMirror : MonoBehaviour
+    public class SoccerBallFactoryMirror : MonoBehaviour, ISoccerBallFactory
     {
         [Header("Settings")]
         [SerializeField] private SoccerBall prefab;

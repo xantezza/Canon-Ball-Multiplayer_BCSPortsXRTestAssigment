@@ -2,7 +2,8 @@
 
 namespace Infrastructure.Services.Logging
 {
-    public abstract class ConditionalLoggingService
+    // not interface to let [Conditional()] works, but technically is interface
+    public abstract class IConditionalLoggingService
     {
         [Conditional("DEV")]
         public void Log(string text, LogTag tag)

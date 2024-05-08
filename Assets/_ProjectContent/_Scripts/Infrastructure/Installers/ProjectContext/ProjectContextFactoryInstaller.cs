@@ -13,10 +13,30 @@ namespace Infrastructure.Installers.ProjectContext
 
         public override void InstallBindings()
         {
-            Container.Bind<StatesFactory>().FromNew().AsSingle().NonLazy();
-            Container.Bind<GameLoopStateMachineFactory>().FromNew().AsSingle().NonLazy();
-            Container.Bind<InitializationStateMachineFactory>().FromNew().AsSingle().NonLazy();
+            BindStatesFactory();
+            BindGameLoopStateMachineFactory();
+            BindInitializationStateMachineFactory();
+            BindModalsFactory();
+        }
+
+        private void BindModalsFactory()
+        {
             Container.Bind<ModalsFactory>().FromInstance(_modalsFactory).AsSingle().NonLazy();
+        }
+
+        private void BindInitializationStateMachineFactory()
+        {
+            Container.Bind<InitializationStateMachineFactory>().FromNew().AsSingle().NonLazy();
+        }
+
+        private void BindGameLoopStateMachineFactory()
+        {
+            Container.Bind<GameLoopStateMachineFactory>().FromNew().AsSingle().NonLazy();
+        }
+
+        private void BindStatesFactory()
+        {
+            Container.Bind<StatesFactory>().FromNew().AsSingle().NonLazy();
         }
     }
 }

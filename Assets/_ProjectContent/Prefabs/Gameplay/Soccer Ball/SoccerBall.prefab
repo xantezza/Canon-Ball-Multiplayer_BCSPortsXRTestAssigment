@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3429911415116987812}
   - component: {fileID: 3690878557849453085}
+  - component: {fileID: 6636585473051201379}
   - component: {fileID: 3429911415116987813}
   - component: {fileID: 3429911415116987810}
   - component: {fileID: -1560774411725421365}
@@ -55,6 +56,19 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0
   _rigidBody: {fileID: 1848203816128897140}
+--- !u!114 &6636585473051201379
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3429911415116987808}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46b38fd7c77f49f293635f48580cd6de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _soccerBall: {fileID: 3690878557849453085}
 --- !u!33 &3429911415116987813
 MeshFilter:
   m_ObjectHideFlags: 0

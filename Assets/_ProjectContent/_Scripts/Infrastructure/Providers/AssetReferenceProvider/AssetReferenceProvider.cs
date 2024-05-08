@@ -5,7 +5,7 @@ using UnityEngine.AddressableAssets;
 namespace Infrastructure.Providers.AssetReferenceProvider
 {
     [Serializable]
-    public class AssetReferenceProvider : MonoBehaviour
+    public class AssetReferenceProvider : MonoBehaviour, IAssetReferenceProvider
     {
         
         [field: SerializeField] public ModalsAssetReferences ModalsAssetReferences { get; private set; }

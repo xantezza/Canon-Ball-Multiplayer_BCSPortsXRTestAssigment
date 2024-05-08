@@ -1,10 +1,9 @@
-﻿using System;
-using Mirror;
+﻿using Mirror;
+using MirrorRoom;
 using UnityEngine;
 
-namespace MirrorRoom
+namespace Infrastructure.Providers.PlayerDataProvider
 {
-    [Serializable]
     public class PlayerData
     {
         public Color PlayerColor = Color.white;

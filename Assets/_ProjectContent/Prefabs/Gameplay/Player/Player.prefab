@@ -1018,15 +1018,6 @@ MonoBehaviour:
   - {fileID: 7491002772191276212}
   - {fileID: 5215471383137562847}
   - {fileID: 2790985111399034277}
-  _playerData:
-    PlayerColor: {r: 1, g: 1, b: 1, a: 1}
-    Name: 
-    Index: 0
-    PlayerColorEnum: 0
-  _score: 0
-  _color:
-    serializedVersion: 2
-    rgba: 4278190080
 --- !u!114 &3360017754931874944
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -1,9 +1,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using Infrastructure.Factories;
-using Infrastructure.Services;
+using Infrastructure.Providers.PlayerDataProvider;
+using Infrastructure.Providers.PlayersProvider;
 using Mirror;
-using MirrorRoom;
+using R3;
+using UI.Gameplay;
 using UnityEngine;
 using Utils.Extensions;
 using Zenject;
@@ -33,20 +35,28 @@ namespace Gameplay.Player
         [SerializeField] private List<MeshRenderer> _meshes;
 
         [SyncVar] [SerializeField] private PlayerData _playerData = new();
-        [SyncVar] [SerializeField] private int _score;
 
         [SyncVar(hook = nameof(SetColorHook))]
-        public Color32 _color = Color.black;
+        private Color32 _color = Color.black;
 
         private Vector3 _prevMousePosition;
         private float _cooldownLeft;
         private float _buttonDownTime;
 
-        private SoccerBallFactoryMirror _ballFactory;
+        private ISoccerBallFactory _ballFactory;
+        private IPlayerDataProvider _playerDataProvider;
+        private IPlayersProvider _playersProvider;
+
+        public ReactiveProperty<int> Score = new();
+        public PlayerData PlayerData => _playerData;
 
         [Inject]
-        private void Inject(SoccerBallFactoryMirror ballFactory)
+        private void Inject(ISoccerBallFactory ballFactory, IPlayerDataProvider playerDataProvider, IPlayersProvider playersProvider)
         {
+            _playersProvider = playersProvider;
+            _playersProvider.RegisterPlayer(this);
+            
+            _playerDataProvider = playerDataProvider;
             _ballFactory = ballFactory;
         }
 
@@ -55,8 +65,18 @@ namespace Gameplay.Player
             _camera.gameObject.SetActive(isOwned);
 
             if (!isOwned) return;
-            CmdUpdatePlayerData(NetworkRoomPlayerExt.OwnedPlayerData);
+            CmdUpdatePlayerData(_playerDataProvider.PlayerData);
             Cursor.lockState = CursorLockMode.Locked;
+        }
+
+        private void OnEnable()
+        {
+            _playersProvider?.RegisterPlayer(this);
+        }
+
+        private void OnDisable()
+        {
+            _playersProvider.UnregisterPlayer(this);
         }
 
         void SetColorHook(Color32 _, Color32 newColor)
@@ -152,20 +172,19 @@ namespace Gameplay.Player
             if (isOwned && hasFocus) Cursor.lockState = CursorLockMode.Locked;
         }
 
-        private void OnGUI()
-        {
-            GUILayout.BeginArea(new Rect((_playerData.Index * 150), 150, 140, 130f));
-
-            GUILayout.Label($"{_playerData.Name} ({_playerData.PlayerColorEnum}): {_score}");
-
-            GUILayout.EndArea();
-        }
 
         [Server]
         public void AddToScore(int value)
         {
-            _score += value;
-            _score = Mathf.Clamp(_score, 0, int.MaxValue);
+            int scoreValue = Score.Value += value;
+            Score.Value = Mathf.Clamp(scoreValue, 0, int.MaxValue);
+            RPCUpdateScore(Score.Value);
+        }
+
+        [ClientRpc]
+        public void RPCUpdateScore(int score)
+        {
+            Score.Value = score;
         }
 
         [Command]

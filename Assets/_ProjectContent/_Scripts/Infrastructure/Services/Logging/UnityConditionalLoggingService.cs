@@ -2,7 +2,7 @@
 
 namespace Infrastructure.Services.Logging
 {
-    public class UnityConditionalLoggingService : ConditionalLoggingService
+    public class UnityConditionalLoggingService : IConditionalLoggingService
     {
         protected override void InternalLog(string text, LogTag tag)
         {

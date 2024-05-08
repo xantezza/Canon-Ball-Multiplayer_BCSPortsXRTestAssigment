@@ -12,14 +12,14 @@ namespace Infrastructure.StateMachines.InitializationStateMachine.States
 {
     public class InitializeRemoteConfigState : BaseInitializationState, IEnterableState
     {
-        private readonly ConditionalLoggingService _conditionalLoggingService;
+        private readonly IConditionalLoggingService _conditionalLoggingService;
 
         private bool _isInitialized;
         
         [Inject]
         public InitializeRemoteConfigState(
             InitializationStateMachine stateMachine,
-            ConditionalLoggingService conditionalLoggingService) : base(stateMachine)
+            IConditionalLoggingService conditionalLoggingService) : base(stateMachine)
         {
             _conditionalLoggingService = conditionalLoggingService;
         }

@@ -7,10 +7,10 @@ namespace Infrastructure.Services.Modals
 {
     public class ModalsFactory : MonoBehaviour
     {
-        private AssetReferenceProvider _assetReferenceProvider;
+        private IAssetReferenceProvider _assetReferenceProvider;
 
         [Inject]
-        public void Inject(AssetReferenceProvider assetReferenceProvider)
+        public void Inject(IAssetReferenceProvider assetReferenceProvider)
         {
             _assetReferenceProvider = assetReferenceProvider;
         }

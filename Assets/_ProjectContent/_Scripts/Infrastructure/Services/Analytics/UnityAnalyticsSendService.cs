@@ -10,11 +10,11 @@ namespace Infrastructure.Services.Analytics
 {
     public class UnityAnalyticsSendService : IAnalyticsSendService, IDisposable
     {
-        private readonly ConditionalLoggingService _conditionalLoggingService;
+        private readonly IConditionalLoggingService _conditionalLoggingService;
         private bool _initialized;
 
         [Inject]
-        public UnityAnalyticsSendService(ConditionalLoggingService conditionalLoggingService)
+        public UnityAnalyticsSendService(IConditionalLoggingService conditionalLoggingService)
         {
             _conditionalLoggingService = conditionalLoggingService;
         }

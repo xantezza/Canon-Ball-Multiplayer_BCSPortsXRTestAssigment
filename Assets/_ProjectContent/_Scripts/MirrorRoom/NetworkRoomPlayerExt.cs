@@ -1,19 +1,28 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Infrastructure.Providers.PlayerDataProvider;
 using Infrastructure.Services;
 using Mirror;
 using UnityEngine;
+using Zenject;
 
 namespace MirrorRoom
 {
     public class NetworkRoomPlayerExt : NetworkRoomPlayer
     {
         private static List<ColorEnum> SelectedColors = new();
-        public static PlayerData OwnedPlayerData;
 
-        [SyncVar]
+        [SyncVar(hook = nameof(UpdatePlayerData))]
         private PlayerData _playerData;
+
+        private IPlayerDataProvider _playerDataProvider;
+
+        [Inject]
+        private void Inject(IPlayerDataProvider playerDataProvider)
+        {
+            _playerDataProvider = playerDataProvider;
+        }
 
         public override void Start()
         {
@@ -76,6 +85,11 @@ namespace MirrorRoom
             }
         }
 
+        private void UpdatePlayerData(PlayerData _, PlayerData playerData)
+        {
+            _playerDataProvider.PlayerData = playerData;
+        }
+
         private void SelectColor(ColorEnum colorEnum)
         {
             CmdSelectColor(colorEnum);
@@ -121,7 +135,7 @@ namespace MirrorRoom
             SelectedColors = selectedColors;
             _playerData = playerData;
 
-            if (isOwned) OwnedPlayerData = _playerData;
+            if (isOwned) _playerDataProvider.PlayerData = _playerData;
         }
 
         public enum ColorEnum

@@ -12,11 +12,11 @@ namespace Gameplay.Player
         [SerializeField] private int _endValueX;
         [SerializeField] private int _duration;
 
-        private SoccerBallFactoryMirror _soccerBallFactory;
+        private ISoccerBallFactory _soccerBallFactory;
         private Sequence _sequence;
 
         [Inject]
-        private void Inject(SoccerBallFactoryMirror soccerBallFactory)
+        private void Inject(ISoccerBallFactory soccerBallFactory)
         {
             _soccerBallFactory = soccerBallFactory;
         }

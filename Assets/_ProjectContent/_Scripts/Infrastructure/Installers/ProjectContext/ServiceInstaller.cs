@@ -20,7 +20,8 @@ namespace Infrastructure.Installers.ProjectContext
         }
         private void BindConditionalLoggingService()
         {
-            Container.Bind<ConditionalLoggingService>().To<UnityConditionalLoggingService>().FromNew().AsSingle().NonLazy();
+            // abstract class, not interface to let [Conditional("Foo")] works
+            Container.Bind<IConditionalLoggingService>().To<UnityConditionalLoggingService>().FromNew().AsSingle().NonLazy();
         }
 
         private void BindAnalyticsLogService()
